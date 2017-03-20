@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	@Autowired
 	UserMapper userMapper;
+	
 	@RequestMapping(value = "/user")
 	public String user(){
 		List<User> user = userMapper.selectByExample(new UserExample());
