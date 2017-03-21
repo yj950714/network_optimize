@@ -22,18 +22,12 @@
     <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
     
-    <table tableName="user_role">
+    <table tableName="user_auth">
     </table>
-    
-    <table tableName="role">
-    </table>
-    
+
     <table tableName="auth">
     </table>
-    
-    <table tableName="role_auth">
-    </table>
-    
+
      <table tableName="task">
     </table>   
 
@@ -41,6 +35,9 @@
     </table>
     
     <table tableName="file_type">
+    </table>
+    
+    <table tableName="user_token">
     </table>
   </context>
 </generatorConfiguration>
