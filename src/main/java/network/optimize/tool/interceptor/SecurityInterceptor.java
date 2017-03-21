@@ -37,7 +37,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{		
-//		String url = request.getServletPath().replace(".html", "");
+		String url = request.getServletPath().replace(".html", "");
 		HttpSession session = request.getSession();
 		String sessionId = session.getId();
 		
@@ -49,7 +49,6 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 		
 		/* 在requestParam中寻找token */
 		String token=request.getParameter("token");
-		
 		/* 检验是否有权限访问该url */
 		UserToken userToken= userService.getUserTokenByToken(token);
 		//判断是用户是否存在且未过期,否则返回错误

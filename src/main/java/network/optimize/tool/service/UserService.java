@@ -1,16 +1,19 @@
 package network.optimize.tool.service;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import network.optimize.tool.constant.ErrorCode;
+import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.entity.UserExample;
 import network.optimize.tool.entity.UserToken;
 import network.optimize.tool.entity.UserTokenExample;
 import network.optimize.tool.exception.WebBackendException;
+import network.optimize.tool.mapper.FileMapper;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.mapper.UserTokenMapper;
 import network.optimize.tool.request.GetTokenRequest;
@@ -30,6 +33,8 @@ public class UserService {
 	UserMapper userMapper;
 	@Autowired
 	UserTokenMapper userTokenMapper;
+	@Autowired
+	FileMapper fileMapper;
 	@Autowired
 	Environment env;
 	
@@ -134,7 +139,11 @@ public class UserService {
 		String uploadDir = FileUtil.getFileDirByUserId(user.getId());
 		//保存文件
 		String saveFileName = FileUtil.uploadFile(uploadfile, uploadRootDir, uploadDir);
-		
+		File file = new File();
+		file.setFileName(saveFileName);
+		file.setPosition(uploadRootDir + uploadDir + "/");
+		file.setUserId(user.getId());
+		file.setUpdateTime(new Date());
 		return new BaseResponse();
 	}
 	

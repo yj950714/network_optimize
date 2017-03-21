@@ -18,26 +18,13 @@
     <!-- dao类 -->
     <javaClientGenerator targetPackage="network.optimize.tool.mapper" targetProject="..\..\..\src\main\java" type="XMLMAPPER" />
 
-    <table tableName="user">
+    <table tableName="file">
     <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
-    
-    <table tableName="user_auth">
+    <table tableName="task">
+    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
-
-    <table tableName="auth">
-    </table>
-
-     <table tableName="task">
-    </table>   
-
-    <table tableName="file">
-    </table>
-    
-    <table tableName="file_type">
-    </table>
-    
-    <table tableName="user_token">
+    <table tableName="task_file">
     </table>
   </context>
 </generatorConfiguration>

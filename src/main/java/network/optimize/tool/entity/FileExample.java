@@ -1,6 +1,7 @@
 package network.optimize.tool.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FileExample {
@@ -254,63 +255,63 @@ public class FileExample {
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIsNull() {
-            addCriterion("task_id is null");
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIsNotNull() {
-            addCriterion("task_id is not null");
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdEqualTo(Long value) {
-            addCriterion("task_id =", value, "taskId");
+        public Criteria andUserIdEqualTo(Long value) {
+            addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotEqualTo(Long value) {
-            addCriterion("task_id <>", value, "taskId");
+        public Criteria andUserIdNotEqualTo(Long value) {
+            addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThan(Long value) {
-            addCriterion("task_id >", value, "taskId");
+        public Criteria andUserIdGreaterThan(Long value) {
+            addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("task_id >=", value, "taskId");
+        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThan(Long value) {
-            addCriterion("task_id <", value, "taskId");
+        public Criteria andUserIdLessThan(Long value) {
+            addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdLessThanOrEqualTo(Long value) {
-            addCriterion("task_id <=", value, "taskId");
+        public Criteria andUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdIn(List<Long> values) {
-            addCriterion("task_id in", values, "taskId");
+        public Criteria andUserIdIn(List<Long> values) {
+            addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotIn(List<Long> values) {
-            addCriterion("task_id not in", values, "taskId");
+        public Criteria andUserIdNotIn(List<Long> values) {
+            addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdBetween(Long value1, Long value2) {
-            addCriterion("task_id between", value1, value2, "taskId");
+        public Criteria andUserIdBetween(Long value1, Long value2) {
+            addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andTaskIdNotBetween(Long value1, Long value2) {
-            addCriterion("task_id not between", value1, value2, "taskId");
+        public Criteria andUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
 
@@ -371,6 +372,76 @@ public class FileExample {
 
         public Criteria andFileTypeIdNotBetween(Long value1, Long value2) {
             addCriterion("file_type_id not between", value1, value2, "fileTypeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameIsNull() {
+            addCriterion("file_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameIsNotNull() {
+            addCriterion("file_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameEqualTo(String value) {
+            addCriterion("file_name =", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameNotEqualTo(String value) {
+            addCriterion("file_name <>", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameGreaterThan(String value) {
+            addCriterion("file_name >", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameGreaterThanOrEqualTo(String value) {
+            addCriterion("file_name >=", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameLessThan(String value) {
+            addCriterion("file_name <", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameLessThanOrEqualTo(String value) {
+            addCriterion("file_name <=", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameLike(String value) {
+            addCriterion("file_name like", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameNotLike(String value) {
+            addCriterion("file_name not like", value, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameIn(List<String> values) {
+            addCriterion("file_name in", values, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameNotIn(List<String> values) {
+            addCriterion("file_name not in", values, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameBetween(String value1, String value2) {
+            addCriterion("file_name between", value1, value2, "fileName");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameNotBetween(String value1, String value2) {
+            addCriterion("file_name not between", value1, value2, "fileName");
             return (Criteria) this;
         }
 
@@ -441,6 +512,66 @@ public class FileExample {
 
         public Criteria andPositionNotBetween(String value1, String value2) {
             addCriterion("position not between", value1, value2, "position");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNull() {
+            addCriterion("update_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNotNull() {
+            addCriterion("update_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeEqualTo(Date value) {
+            addCriterion("update_time =", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotEqualTo(Date value) {
+            addCriterion("update_time <>", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThan(Date value) {
+            addCriterion("update_time >", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_time >=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThan(Date value) {
+            addCriterion("update_time <", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_time <=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIn(List<Date> values) {
+            addCriterion("update_time in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotIn(List<Date> values) {
+            addCriterion("update_time not in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("update_time between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
     }

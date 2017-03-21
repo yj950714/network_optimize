@@ -72,8 +72,8 @@ public class UserController {
 	 * @throws Exception 
 	 */
     @RequestMapping(value="/user/upload", method=RequestMethod.POST)
-    BaseResponse uploadResult(@RequestAttribute("user") User user,@RequestParam("file") MultipartFile uploadfile) throws Exception {
-    	BaseResponse response = userService.uploadFile(user,uploadfile);
+    BaseResponse uploadResult(@RequestAttribute("user") User user, @RequestParam("file") MultipartFile uploadfile) throws Exception {
+    	BaseResponse response = userService.uploadFile(user, uploadfile);
     	return response;
     }
     
