@@ -18,6 +18,8 @@ public enum ErrorCode {
 	NOT_VALID_DATE(30001,"时间格式错误"),
 	//文件相关错误
 	FILE_TYPE_ERROR(40001,"文件类型错误"),
+	UPLOAD_TO_REMOTE_ERROR(40005,"上传文件到计算服务器错误"),
+	DOWNLOAD_FROM_REMOTE_ERROR(40006,"从计算服务器下载文件出错"),
 	
 	
 	OTHER(10099,"其他类型错误");

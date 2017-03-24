@@ -2,16 +2,20 @@ package network.optimize.tool.service;
 
 import java.util.Date;
 
+import network.optimize.tool.client.SftpClient;
 import network.optimize.tool.constant.ErrorCode;
+import network.optimize.tool.constant.RemoteServerConstant;
 import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.FileType;
 import network.optimize.tool.entity.FileTypeExample;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.exception.WebBackendException;
+import network.optimize.tool.mapper.FileMapper;
 import network.optimize.tool.mapper.FileTypeMapper;
 import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.util.CommonUtil;
 import network.optimize.tool.util.FileUtil;
+import network.optimize.tool.util.SftpClientUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,6 +27,8 @@ public class FileService {
 
 	@Autowired
 	FileTypeMapper fileTypeMapper;
+	@Autowired
+	FileMapper fileMapper;
 	@Autowired
 	Environment env;
 	
@@ -38,7 +44,7 @@ public class FileService {
 	
 	
 	/**
-	 * 上传文件
+	 * 用户上传文件到服务器
 	 */
 	public BaseResponse uploadFile(User user, MultipartFile uploadFile) throws Exception {
 		//获取上传根目录
@@ -56,7 +62,8 @@ public class FileService {
 		file.setFileTypeId(fileTypeId);
 		file.setUserId(user.getId());
 		file.setUpdateTime(new Date());
-		
+		fileMapper.insert(file);
 		return new BaseResponse();
 	}
+	
 }

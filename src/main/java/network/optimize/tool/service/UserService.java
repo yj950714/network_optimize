@@ -1,13 +1,11 @@
 package network.optimize.tool.service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import network.optimize.tool.constant.ErrorCode;
-import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.entity.UserExample;
 import network.optimize.tool.entity.UserToken;
@@ -17,14 +15,11 @@ import network.optimize.tool.mapper.FileMapper;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.mapper.UserTokenMapper;
 import network.optimize.tool.request.GetTokenRequest;
-import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.util.CommonUtil;
-import network.optimize.tool.util.FileUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Service

@@ -19,7 +19,7 @@ public class FileController {
 	FileService fileService;
 	
 	/**
-	 * 上传文件
+	 * 接收上传到服务器的文件
 	 * @throws Exception 
 	 */
     @RequestMapping(value="/file/upload", method=RequestMethod.POST)
@@ -27,4 +27,5 @@ public class FileController {
     	BaseResponse response = fileService.uploadFile(user, uploadfile);
     	return response;
     }
+    
 }
