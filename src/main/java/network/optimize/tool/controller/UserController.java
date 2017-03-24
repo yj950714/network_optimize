@@ -1,7 +1,5 @@
 package network.optimize.tool.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -13,6 +11,9 @@ import network.optimize.tool.exception.WebBackendException;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.request.GetTokenRequest;
 import network.optimize.tool.response.GetTokenResponse;
+import network.optimize.tool.response.GetUserResponse;
+import network.optimize.tool.response.ListResponse;
+import network.optimize.tool.response.info.UserInfo;
 import network.optimize.tool.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,27 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	/**
+	 * 获取用户信息列表
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/admin/user",method=RequestMethod.GET)
-	public List<User> getUserList() throws Exception{
-		List<User> response = userService.getUserList();
+	public ListResponse<UserInfo> getUserList() throws Exception{
+		ListResponse<UserInfo> response = userService.getUserList();
 		return response;
 	}
 	
+	
+	/**
+	 * 获取单个用户信息
+	 * @param id
+	 * @return
+	 * @throws WebBackendException
+	 */
 	@RequestMapping(value = "/admin/user/{id}",method=RequestMethod.GET)
-	public User getUserInfo(@PathVariable Long id) throws WebBackendException {
-		User response = userService.getUser(id);
+	public GetUserResponse getUserInfo(@PathVariable Long id) throws WebBackendException {
+		GetUserResponse response = userService.getUser(id);
 		return response;
 	}
 	

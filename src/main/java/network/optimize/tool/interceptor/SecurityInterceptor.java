@@ -66,7 +66,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 //			throw new WebBackendException(ErrorCode.AUTH_ERROR);
 //		}
 		//将用户放入session
-		User user = userService.getUser(userToken.getUserId());
+		User user = userService.getUserInfo(userToken.getUserId());
 		request.setAttribute("user", user);
 		return true;
 	}

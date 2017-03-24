@@ -323,6 +323,76 @@ public class TaskTypeExample {
             addCriterion("task_type_name not between", value1, value2, "taskTypeName");
             return (Criteria) this;
         }
+
+        public Criteria andCommandHeadIsNull() {
+            addCriterion("command_head is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadIsNotNull() {
+            addCriterion("command_head is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadEqualTo(String value) {
+            addCriterion("command_head =", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadNotEqualTo(String value) {
+            addCriterion("command_head <>", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadGreaterThan(String value) {
+            addCriterion("command_head >", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadGreaterThanOrEqualTo(String value) {
+            addCriterion("command_head >=", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadLessThan(String value) {
+            addCriterion("command_head <", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadLessThanOrEqualTo(String value) {
+            addCriterion("command_head <=", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadLike(String value) {
+            addCriterion("command_head like", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadNotLike(String value) {
+            addCriterion("command_head not like", value, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadIn(List<String> values) {
+            addCriterion("command_head in", values, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadNotIn(List<String> values) {
+            addCriterion("command_head not in", values, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadBetween(String value1, String value2) {
+            addCriterion("command_head between", value1, value2, "commandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommandHeadNotBetween(String value1, String value2) {
+            addCriterion("command_head not between", value1, value2, "commandHead");
+            return (Criteria) this;
+        }
     }
 
     /**

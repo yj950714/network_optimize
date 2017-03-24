@@ -30,5 +30,5 @@ public class RemoteServerConstant {
 	/**
 	 * 远程计算服务器根目录
 	 */
-	public static final String REMOTE_SERVER_ROOT_DIRECTORY = "/share/home/fzshen/yj";
+	public static final String REMOTE_SERVER_ROOT_DIRECTORY = "/share/home/fzshen/network_optimize_tool_workspace";
 }

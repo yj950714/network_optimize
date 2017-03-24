@@ -15,8 +15,13 @@ import network.optimize.tool.mapper.FileMapper;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.mapper.UserTokenMapper;
 import network.optimize.tool.request.GetTokenRequest;
+import network.optimize.tool.response.GetUserResponse;
+import network.optimize.tool.response.ListResponse;
+import network.optimize.tool.response.info.UserInfo;
 import network.optimize.tool.util.CommonUtil;
+import network.optimize.tool.util.RowConverter;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -38,20 +43,51 @@ public class UserService {
 	 * 获取用户列表
 	 * @throws Exception 
 	 */
-	public List<User> getUserList() throws Exception {
-		List<User> response = userMapper.selectByExample(new UserExample());
+	public ListResponse<UserInfo> getUserList() throws Exception {
+		List<User> userList = userMapper.selectByExample(new UserExample());
+		ListResponse<UserInfo> response = new ListResponse<UserInfo>(userList,new RowConverter<User,UserInfo>(){
+				@Override
+				@SuppressWarnings("null")
+				public UserInfo convertRow (User user){
+						UserInfo userInfo = new UserInfo();
+						userInfo.setId(user.getId());
+						userInfo.setUserName(user.getUserName());
+						userInfo.setRealName(user.getRealName());
+						userInfo.setEmail(user.getEmail());
+						userInfo.setCreateTime(user.getCreateTime());
+						return userInfo;
+				}
+		});
 		return response;
+	}
+	
+	/**
+	 * 获取用户信息_包含密码
+	 * @throws WebBackendException
+	 */
+	public User getUserInfo(Long id) throws WebBackendException {
+		User user = userMapper.selectByPrimaryKey(id);
+		if (user==null){
+			throw new WebBackendException(ErrorCode.USER_NOT_FOUND);
+		}
+		return user;
 	}
 	
 	/**
 	 * 获取用户信息
 	 * @throws WebBackendException
 	 */
-	public User getUser(Long id) throws WebBackendException {
-		User response = userMapper.selectByPrimaryKey(id);
-		if (response==null){
+	public GetUserResponse getUser(Long id) throws WebBackendException {
+		User user = userMapper.selectByPrimaryKey(id);
+		if (user==null){
 			throw new WebBackendException(ErrorCode.USER_NOT_FOUND);
 		}
+		GetUserResponse response = new GetUserResponse();
+		response.setId(user.getId());
+		response.setUserName(user.getUserName());
+		response.setRealName(user.getRealName());
+		response.setEmail(user.getEmail());
+		response.setCreateTime(user.getCreateTime());
 		return response;
 	}
 	
@@ -119,7 +155,7 @@ public class UserService {
 	 */
 	public User validUser(GetTokenRequest request) {
 		UserExample userExample = new UserExample();
-		userExample.or().andUserNameEqualTo(request.getUsername()).andPasswordEqualTo(CommonUtil.getMd5(request.getPassword()));
+		userExample.or().andUserNameEqualTo(request.getUserName()).andPasswordEqualTo(CommonUtil.getMd5(request.getPassword()));
 		List<User> userList = userMapper.selectByExample(userExample);
 		return CommonUtil.getFirst(userList);
 	}
