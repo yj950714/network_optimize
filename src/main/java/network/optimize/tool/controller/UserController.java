@@ -12,19 +12,15 @@ import network.optimize.tool.entity.UserToken;
 import network.optimize.tool.exception.WebBackendException;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.request.GetTokenRequest;
-import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.GetTokenResponse;
 import network.optimize.tool.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 
 
@@ -65,16 +61,6 @@ public class UserController {
     		response.setRealName(user.getRealName());
     		return response;
     	}
-    }
-    
-	/**
-	 * 上传文件
-	 * @throws Exception 
-	 */
-    @RequestMapping(value="/user/upload", method=RequestMethod.POST)
-    BaseResponse uploadResult(@RequestAttribute("user") User user, @RequestParam("file") MultipartFile uploadfile) throws Exception {
-    	BaseResponse response = userService.uploadFile(user, uploadfile);
-    	return response;
     }
     
 	

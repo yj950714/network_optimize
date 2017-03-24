@@ -323,6 +323,76 @@ public class FileTypeExample {
             addCriterion("file_type_name not between", value1, value2, "fileTypeName");
             return (Criteria) this;
         }
+
+        public Criteria andExtensionIsNull() {
+            addCriterion("extension is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionIsNotNull() {
+            addCriterion("extension is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionEqualTo(String value) {
+            addCriterion("extension =", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionNotEqualTo(String value) {
+            addCriterion("extension <>", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionGreaterThan(String value) {
+            addCriterion("extension >", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionGreaterThanOrEqualTo(String value) {
+            addCriterion("extension >=", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionLessThan(String value) {
+            addCriterion("extension <", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionLessThanOrEqualTo(String value) {
+            addCriterion("extension <=", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionLike(String value) {
+            addCriterion("extension like", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionNotLike(String value) {
+            addCriterion("extension not like", value, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionIn(List<String> values) {
+            addCriterion("extension in", values, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionNotIn(List<String> values) {
+            addCriterion("extension not in", values, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionBetween(String value1, String value2) {
+            addCriterion("extension between", value1, value2, "extension");
+            return (Criteria) this;
+        }
+
+        public Criteria andExtensionNotBetween(String value1, String value2) {
+            addCriterion("extension not between", value1, value2, "extension");
+            return (Criteria) this;
+        }
     }
 
     /**

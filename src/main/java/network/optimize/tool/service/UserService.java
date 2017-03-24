@@ -129,23 +129,5 @@ public class UserService {
 		return CommonUtil.getFirst(userList);
 	}
 	
-	/**
-	 * 上传文件
-	 */
-	public BaseResponse uploadFile(User user, MultipartFile uploadfile) throws Exception {
-		//获取上传根目录
-		String uploadRootDir = env.getProperty("network_optimize.task.uploadDir");
-		//获取相对路径
-		String uploadDir = FileUtil.getFileDirByUserId(user.getId());
-		//保存文件
-		String saveFileName = FileUtil.uploadFile(uploadfile, uploadRootDir, uploadDir);
-		File file = new File();
-		file.setFileName(saveFileName);
-		file.setPosition(uploadRootDir + uploadDir + "/");
-		file.setUserId(user.getId());
-		file.setUpdateTime(new Date());
-		return new BaseResponse();
-	}
-	
 	
 }

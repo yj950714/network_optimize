@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public enum ErrorCode {
 	NOT_VALID_PARAM(10001,"参数错误,请确认参数格式正确"),
-	
+	//用户相关错误
 	USER_NOT_FOUND(20001,"找不到用户"),
 	TOKEN_ERROR(20002,"token不正确"),
 	AUTH_ERROR(20003,"您无该操作权限"),
@@ -16,6 +16,8 @@ public enum ErrorCode {
 	USER_PASSWORD_NOT_VALID(20010,"用户名密码不正确"),
 	
 	NOT_VALID_DATE(30001,"时间格式错误"),
+	//文件相关错误
+	FILE_TYPE_ERROR(40001,"文件类型错误"),
 	
 	
 	OTHER(10099,"其他类型错误");
