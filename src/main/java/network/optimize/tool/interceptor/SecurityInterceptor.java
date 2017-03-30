@@ -85,5 +85,5 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter{
 					sessionId, response.getStatus(), handler, executeTime);
 		}
 	}
-	
+
 }

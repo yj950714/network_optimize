@@ -1,6 +1,5 @@
 package network.optimize.tool.controller;
 
-import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.ListResponse;
@@ -8,6 +7,7 @@ import network.optimize.tool.response.info.FileInfo;
 import network.optimize.tool.service.FileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@CrossOrigin
 @RestController
 public class FileController {
 
