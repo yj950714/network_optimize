@@ -1,7 +1,5 @@
 package network.optimize.tool.constant;
 
-import java.util.HashMap;
-
 public enum ErrorCode {
 	NOT_VALID_PARAM(10001,"参数错误,请确认参数格式正确"),
 	//用户相关错误
@@ -12,6 +10,7 @@ public enum ErrorCode {
 	ROLELIST_NOT_FOUND(20005,"未定义角色列表"),
 	ROLE_NOT_FOUND(20006,"未找到角色"),
 	BATCH_TASK_NOT_EXIST(20007,"编辑参数错误"),
+	EMAIL_ERROR(20008, "无效的邮件地址"),
 	PAGE_MODE_ERROR(20009,"批量查询任务不存在"),
 	USER_PASSWORD_NOT_VALID(20010,"用户名密码不正确"),
 	

@@ -4,18 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import network.optimize.tool.constant.ErrorCode;
-import network.optimize.tool.entity.User;
-import network.optimize.tool.entity.UserToken;
-import network.optimize.tool.exception.WebBackendException;
-import network.optimize.tool.mapper.UserMapper;
-import network.optimize.tool.request.GetTokenRequest;
-import network.optimize.tool.response.GetTokenResponse;
-import network.optimize.tool.response.GetUserResponse;
-import network.optimize.tool.response.ListResponse;
-import network.optimize.tool.response.info.UserInfo;
-import network.optimize.tool.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import network.optimize.tool.constant.ErrorCode;
+import network.optimize.tool.entity.User;
+import network.optimize.tool.entity.UserToken;
+import network.optimize.tool.exception.WebBackendException;
+import network.optimize.tool.mapper.UserMapper;
+import network.optimize.tool.request.ForgetPasswordRequest;
+import network.optimize.tool.request.GetTokenRequest;
+import network.optimize.tool.response.BaseResponse;
+import network.optimize.tool.response.GetTokenResponse;
+import network.optimize.tool.response.GetUserResponse;
+import network.optimize.tool.response.ListResponse;
+import network.optimize.tool.response.info.UserInfo;
+import network.optimize.tool.service.UserService;
 
 
 @CrossOrigin
@@ -77,5 +79,10 @@ public class UserController {
     	}
     }
     
+    @RequestMapping(value="/user/forget_passowrd",method=RequestMethod.POST)
+    BaseResponse forgetPassword(@RequestBody ForgetPasswordRequest request) throws WebBackendException{
+    	BaseResponse response = userService.forgetPassword(request);
+    	return response;
+    }
 	
 }

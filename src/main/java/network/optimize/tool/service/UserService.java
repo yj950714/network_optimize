@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+
 import network.optimize.tool.constant.ErrorCode;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.entity.UserExample;
@@ -14,17 +18,14 @@ import network.optimize.tool.exception.WebBackendException;
 import network.optimize.tool.mapper.FileMapper;
 import network.optimize.tool.mapper.UserMapper;
 import network.optimize.tool.mapper.UserTokenMapper;
+import network.optimize.tool.request.ForgetPasswordRequest;
 import network.optimize.tool.request.GetTokenRequest;
+import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.GetUserResponse;
 import network.optimize.tool.response.ListResponse;
 import network.optimize.tool.response.info.UserInfo;
 import network.optimize.tool.util.CommonUtil;
 import network.optimize.tool.util.RowConverter;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
 
 
 @Service
@@ -160,5 +161,14 @@ public class UserService {
 		return CommonUtil.getFirst(userList);
 	}
 	
-	
+	public BaseResponse forgetPassword(ForgetPasswordRequest request) throws WebBackendException{
+		UserExample userExample = new UserExample();
+		userExample.or().andEmailEqualTo(request.getEmail());
+		User user = CommonUtil.getFirst(userMapper.selectByExample(userExample));
+		if (user == null){
+			throw new WebBackendException(ErrorCode.EMAIL_ERROR);
+		}
+		//发送邮件
+		return new BaseResponse();
+	}
 }

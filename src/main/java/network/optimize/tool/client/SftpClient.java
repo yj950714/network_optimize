@@ -15,6 +15,11 @@ import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 
+/**
+ * sftp客户端类
+ * @author jie.yao
+ *
+ */
 public class SftpClient {
 	
 	private final Logger logger = LoggerFactory.getLogger(SftpClient.class); 
