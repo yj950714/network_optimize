@@ -3,13 +3,12 @@ package network.optimize.tool.service;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
-
+import network.optimize.tool.constant.EMailConstant;
 import network.optimize.tool.constant.ErrorCode;
+import network.optimize.tool.constant.NetworkOptimizeConstant;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.entity.UserExample;
 import network.optimize.tool.entity.UserToken;
@@ -24,8 +23,14 @@ import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.GetUserResponse;
 import network.optimize.tool.response.ListResponse;
 import network.optimize.tool.response.info.UserInfo;
+import network.optimize.tool.util.CheckUtil;
 import network.optimize.tool.util.CommonUtil;
+import network.optimize.tool.util.MailUtil;
 import network.optimize.tool.util.RowConverter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 
 @Service
@@ -161,6 +166,12 @@ public class UserService {
 		return CommonUtil.getFirst(userList);
 	}
 	
+	/**
+	 * 忘记密码-重置为随机密码并发送邮件
+	 * @param request
+	 * @return
+	 * @throws WebBackendException
+	 */
 	public BaseResponse forgetPassword(ForgetPasswordRequest request) throws WebBackendException{
 		UserExample userExample = new UserExample();
 		userExample.or().andEmailEqualTo(request.getEmail());
@@ -169,6 +180,15 @@ public class UserService {
 			throw new WebBackendException(ErrorCode.EMAIL_ERROR);
 		}
 		//发送邮件
+		try{
+			//生成随机密码并发送邮件
+			String newPassword = CheckUtil.getRandomString(NetworkOptimizeConstant.COMMON_PASSWORD_LENGTH);
+			user.setPassword(CommonUtil.getMd5(newPassword));
+			userMapper.updateByPrimaryKey(user);
+			MailUtil.sendPlatFormMessage(user.getEmail(), null, EMailConstant.PLATFORM_WATCHER_EMAILS, "邮件重置密码", "<h3>"+user.getRealName()+" 您好<br/>以下为您的新密码,请妥善保管:</h3><br/><h2>"+newPassword+"</h2>");
+		}catch (MessagingException e){
+			throw new WebBackendException(ErrorCode.EMAIL_FAIL);
+		}
 		return new BaseResponse();
 	}
 }

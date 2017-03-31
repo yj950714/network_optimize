@@ -13,6 +13,7 @@ public enum ErrorCode {
 	EMAIL_ERROR(20008, "无效的邮件地址"),
 	PAGE_MODE_ERROR(20009,"批量查询任务不存在"),
 	USER_PASSWORD_NOT_VALID(20010,"用户名密码不正确"),
+	EMAIL_FAIL(20011, "邮件发送失败"),
 	
 	NOT_VALID_DATE(30001,"时间格式错误"),
 	//文件相关错误

@@ -17,5 +17,9 @@ public class NetworkOptimizeConstant {
 	 */
 	public static final String COMMON_DATE_FORMAT = "yyyy-MM-dd";
 
+	/**
+	 * 默认密码长度
+	 */
+	public static final int COMMON_PASSWORD_LENGTH = 12;
 	
 }
