@@ -6,6 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
+import network.optimize.tool.client.MailClient;
 import network.optimize.tool.constant.EMailConstant;
 import network.optimize.tool.constant.ErrorCode;
 import network.optimize.tool.constant.NetworkOptimizeConstant;
@@ -25,7 +26,6 @@ import network.optimize.tool.response.ListResponse;
 import network.optimize.tool.response.info.UserInfo;
 import network.optimize.tool.util.CheckUtil;
 import network.optimize.tool.util.CommonUtil;
-import network.optimize.tool.util.MailUtil;
 import network.optimize.tool.util.RowConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,16 +179,18 @@ public class UserService {
 		if (user == null){
 			throw new WebBackendException(ErrorCode.EMAIL_ERROR);
 		}
+		//生成随机密码
+		String newPassword = CheckUtil.getRandomString(NetworkOptimizeConstant.COMMON_PASSWORD_LENGTH);
 		//发送邮件
 		try{
-			//生成随机密码并发送邮件
-			String newPassword = CheckUtil.getRandomString(NetworkOptimizeConstant.COMMON_PASSWORD_LENGTH);
-			user.setPassword(CommonUtil.getMd5(newPassword));
-			userMapper.updateByPrimaryKey(user);
-			MailUtil.sendPlatFormMessage(user.getEmail(), null, EMailConstant.PLATFORM_WATCHER_EMAILS, "邮件重置密码", "<h3>"+user.getRealName()+" 您好<br/>以下为您的新密码,请妥善保管:</h3><br/><h2>"+newPassword+"</h2>");
-		}catch (MessagingException e){
+			MailClient mailClient = new MailClient();
+			mailClient.SendEmail("Network Optimize Tool 邮件重置密码", "<h3>"+user.getRealName()+" 您好<br/>以下为您的新密码,请妥善保管:</h3><br/><h2>"+newPassword+"</h2>", user.getEmail());
+		}catch (Exception e){
 			throw new WebBackendException(ErrorCode.EMAIL_FAIL);
 		}
+		//更新数据库
+		user.setPassword(CommonUtil.getMd5(newPassword));
+		userMapper.updateByPrimaryKey(user);
 		return new BaseResponse();
 	}
 }

@@ -17,7 +17,7 @@ public class EMailConstant {
 	/**
 	 * 密码
 	 */
-	public static final String PLATFORM_EMAIL_PASSWORD = "Yao1995Jie0715";
+	public static final String PLATFORM_EMAIL_PASSWORD = "Hellokitty1995";
 	/**
 	 * 平台后台邮件密送人
 	 */

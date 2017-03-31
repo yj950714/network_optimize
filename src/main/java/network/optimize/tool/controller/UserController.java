@@ -1,6 +1,7 @@
 package network.optimize.tool.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -27,7 +28,7 @@ import network.optimize.tool.response.info.UserInfo;
 import network.optimize.tool.service.UserService;
 
 
-@CrossOrigin
+
 @RestController
 public class UserController {
 	@Autowired
@@ -79,8 +80,15 @@ public class UserController {
     	}
     }
     
-    @RequestMapping(value="/user/forget_passowrd",method=RequestMethod.POST)
-    BaseResponse forgetPassword(@RequestBody ForgetPasswordRequest request) throws WebBackendException{
+    /**
+     * 忘记密码-重置密码并发送邮件
+     * @param request
+     * @return
+     * @throws WebBackendException
+     */
+    @RequestMapping(value="/user/forget_password",method=RequestMethod.POST)
+    BaseResponse forgetPassword(@RequestBody @Valid ForgetPasswordRequest request, HttpServletResponse servletResponse) throws WebBackendException{
+    	servletResponse.addHeader("Access-Control-Allow-Origin", "*");
     	BaseResponse response = userService.forgetPassword(request);
     	return response;
     }
