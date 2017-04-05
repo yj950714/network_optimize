@@ -12,7 +12,7 @@ public class EMailConstant {
 	/**
 	 * 发件邮箱
 	 */
-	public static final String PLATFORM_EMAIL = "yj950714@163.com";
+	public static final String PLATFORM_EMAIL = "network_optimize@163.com";
 	
 	/**
 	 * 密码
@@ -21,7 +21,7 @@ public class EMailConstant {
 	/**
 	 * 平台后台邮件密送人
 	 */
-	public static final String[] PLATFORM_WATCHER_EMAILS = {"yj950714@163.com"};
+	public static final String[] PLATFORM_WATCHER_EMAILS = {"network_optimize@163.com"};
 	/**
 	 * 默认邮件格式
 	 */

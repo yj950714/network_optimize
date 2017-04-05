@@ -25,7 +25,7 @@ public class MailClient{
 	// 服务器验证
 	private static String KEY_PROPS = "mail.smtp.auth";
 	// 发件人用户名、密码
-	private String SEND_UNAME = "yj950714";
+	private String SEND_UNAME = "network_optimize";
 	// 建立会话
 	private MimeMessage message;
 	private Session s;
