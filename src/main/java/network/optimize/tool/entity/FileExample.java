@@ -445,6 +445,136 @@ public class FileExample {
             return (Criteria) this;
         }
 
+        public Criteria andFileNameToUserIsNull() {
+            addCriterion("file_name_to_user is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserIsNotNull() {
+            addCriterion("file_name_to_user is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserEqualTo(String value) {
+            addCriterion("file_name_to_user =", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserNotEqualTo(String value) {
+            addCriterion("file_name_to_user <>", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserGreaterThan(String value) {
+            addCriterion("file_name_to_user >", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserGreaterThanOrEqualTo(String value) {
+            addCriterion("file_name_to_user >=", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserLessThan(String value) {
+            addCriterion("file_name_to_user <", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserLessThanOrEqualTo(String value) {
+            addCriterion("file_name_to_user <=", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserLike(String value) {
+            addCriterion("file_name_to_user like", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserNotLike(String value) {
+            addCriterion("file_name_to_user not like", value, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserIn(List<String> values) {
+            addCriterion("file_name_to_user in", values, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserNotIn(List<String> values) {
+            addCriterion("file_name_to_user not in", values, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserBetween(String value1, String value2) {
+            addCriterion("file_name_to_user between", value1, value2, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileNameToUserNotBetween(String value1, String value2) {
+            addCriterion("file_name_to_user not between", value1, value2, "fileNameToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeIsNull() {
+            addCriterion("file_size is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeIsNotNull() {
+            addCriterion("file_size is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeEqualTo(Long value) {
+            addCriterion("file_size =", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeNotEqualTo(Long value) {
+            addCriterion("file_size <>", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeGreaterThan(Long value) {
+            addCriterion("file_size >", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeGreaterThanOrEqualTo(Long value) {
+            addCriterion("file_size >=", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeLessThan(Long value) {
+            addCriterion("file_size <", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeLessThanOrEqualTo(Long value) {
+            addCriterion("file_size <=", value, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeIn(List<Long> values) {
+            addCriterion("file_size in", values, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeNotIn(List<Long> values) {
+            addCriterion("file_size not in", values, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeBetween(Long value1, Long value2) {
+            addCriterion("file_size between", value1, value2, "fileSize");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileSizeNotBetween(Long value1, Long value2) {
+            addCriterion("file_size not between", value1, value2, "fileSize");
+            return (Criteria) this;
+        }
+
         public Criteria andPositionIsNull() {
             addCriterion("position is null");
             return (Criteria) this;

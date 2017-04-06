@@ -35,6 +35,13 @@ public class FileService {
 	@Autowired
 	Environment env;
 	
+	
+	/**
+	 * 根据文件扩展名获取文件类型id
+	 * @param fileExtension
+	 * @return
+	 * @throws WebBackendException
+	 */
 	private Long getFileTypeId(String fileExtension) throws WebBackendException{
 		FileTypeExample fileTypeExample = new FileTypeExample();
 		fileTypeExample.or().andExtensionEqualTo(fileExtension);
@@ -61,6 +68,8 @@ public class FileService {
 		//上传的文件信息写入数据库
 		File file = new File();
 		file.setFileName(saveFileName);
+		file.setFileNameToUser(uploadFile.getOriginalFilename());
+		file.setFileSize(uploadFile.getSize());
 		file.setPosition(uploadRootDir + uploadDir + "/");
 		file.setFileTypeId(fileTypeId);
 		file.setUserId(user.getId());
@@ -85,7 +94,10 @@ public class FileService {
 					fileInfo.setId(file.getId());
 					fileInfo.setUserId(file.getUserId());
 					fileInfo.setFileTypeId(file.getFileTypeId());
+					fileInfo.setFileTypeName(fileTypeMapper.selectByPrimaryKey(file.getFileTypeId()).getFileTypeName());
 					fileInfo.setFileName(file.getFileName());
+					fileInfo.setFileNameToUser(file.getFileNameToUser());
+					fileInfo.setFileSize(file.getFileSize());
 					fileInfo.setUpdateTime(file.getUpdateTime());
 					return fileInfo;
 			}

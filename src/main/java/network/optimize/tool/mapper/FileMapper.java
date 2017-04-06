@@ -2,11 +2,11 @@ package network.optimize.tool.mapper;
 
 import java.util.List;
 
-import network.optimize.tool.entity.File;
-import network.optimize.tool.entity.FileExample;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import network.optimize.tool.entity.File;
+import network.optimize.tool.entity.FileExample;
 
 @Mapper
 public interface FileMapper {

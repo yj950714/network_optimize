@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration >
   <classPathEntry  
-        location="C:\Users\jie.yao\.m2\repository\mysql\mysql-connector-java\5.1.21\mysql-connector-java-5.1.21.jar" /> 
+        location="C:\Users\Never\.m2\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar" /> 
   <context id="context1" >
    	<!-- 生成注释:否 -->
   	<commentGenerator>
@@ -18,17 +18,9 @@
     <!-- dao类 -->
     <javaClientGenerator targetPackage="network.optimize.tool.mapper" targetProject="..\..\..\src\main\java" type="XMLMAPPER" />
 
-    <table tableName="task">
+    <table tableName="file">
     <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>
-    <table tableName="param">
-    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-    </table>
-    <table tableName="task_param">
-    </table>
-    <table tableName="task_type">
-    </table>
-    <table tableName="parameter">
-    </table>
+    
   </context>
 </generatorConfiguration>

@@ -32,14 +32,15 @@ public class FileController {
     	return response;
     }
     
+    
 	/**
-	 * 获取一个用户的所有文件
+	 * 获取一个用户的所有文件,由于有token，不用涉及id
 	 * @throws Exception 
 	 */
-    @RequestMapping(value="/user/files/{id}", method=RequestMethod.GET)
-    ListResponse<FileInfo> getFilesByUser(@PathVariable Long id) throws Exception {
-    	ListResponse<FileInfo> response = fileService.getFilesByUser(id);
+    @RequestMapping(value="/user/files", method=RequestMethod.GET)
+    ListResponse<FileInfo> getFilesByUser(@RequestAttribute("user") User user) throws Exception {
+    	ListResponse<FileInfo> response = fileService.getFilesByUser(user.getId());
     	return response;
-    }
+    }  
     
 }
