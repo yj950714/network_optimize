@@ -1,20 +1,20 @@
 package network.optimize.tool.controller;
 
-import network.optimize.tool.entity.User;
-import network.optimize.tool.response.BaseResponse;
-import network.optimize.tool.response.ListResponse;
-import network.optimize.tool.response.info.FileInfo;
-import network.optimize.tool.service.FileService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import network.optimize.tool.entity.User;
+import network.optimize.tool.exception.WebBackendException;
+import network.optimize.tool.request.ChangeUserFileRequest;
+import network.optimize.tool.response.BaseResponse;
+import network.optimize.tool.response.ListResponse;
+import network.optimize.tool.response.info.FileInfo;
+import network.optimize.tool.service.FileService;
 
 @RestController
 public class FileController {
@@ -41,6 +41,12 @@ public class FileController {
     ListResponse<FileInfo> getFilesByUser(@RequestAttribute("user") User user) throws Exception {
     	ListResponse<FileInfo> response = fileService.getFilesByUser(user.getId());
     	return response;
-    }  
+    } 
+    
+    @RequestMapping(value="/user/files", method=RequestMethod.POST)
+    BaseResponse changeUserFile(@RequestAttribute("user") User user, ChangeUserFileRequest request) throws WebBackendException{
+    	BaseResponse response = fileService.changeUserFile(user, request);
+    	return response;
+    }
     
 }

@@ -22,4 +22,15 @@ public class NetworkOptimizeConstant {
 	 */
 	public static final int COMMON_PASSWORD_LENGTH = 12;
 	
+	/**
+	 * 文件操作--删除
+	 */
+	public static final String FILE_DELETE = "delete";
+	
+	/**
+	 * 文件操作--修改
+	 */
+	public static final String FILE_CHANGE = "edit";
+	
+	
 }

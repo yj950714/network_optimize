@@ -17,6 +17,7 @@ public class FileInfo {
 	private String fileTypeName;
 	private String fileName;
 	private String fileNameToUser;
+	private Long fileIdToUser;
 	private Long fileSize;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date updateTime;
@@ -68,6 +69,12 @@ public class FileInfo {
 	}
 	public void setFileSize(Long fileSize) {
 		this.fileSize = fileSize;
+	}
+	public Long getFileIdToUser() {
+		return fileIdToUser;
+	}
+	public void setFileIdToUser(Long fileIdToUser) {
+		this.fileIdToUser = fileIdToUser;
 	}
 	
 	

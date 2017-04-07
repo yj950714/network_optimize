@@ -255,6 +255,66 @@ public class FileExample {
             return (Criteria) this;
         }
 
+        public Criteria andFileIdToUserIsNull() {
+            addCriterion("file_id_to_user is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserIsNotNull() {
+            addCriterion("file_id_to_user is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserEqualTo(Long value) {
+            addCriterion("file_id_to_user =", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserNotEqualTo(Long value) {
+            addCriterion("file_id_to_user <>", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserGreaterThan(Long value) {
+            addCriterion("file_id_to_user >", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserGreaterThanOrEqualTo(Long value) {
+            addCriterion("file_id_to_user >=", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserLessThan(Long value) {
+            addCriterion("file_id_to_user <", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserLessThanOrEqualTo(Long value) {
+            addCriterion("file_id_to_user <=", value, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserIn(List<Long> values) {
+            addCriterion("file_id_to_user in", values, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserNotIn(List<Long> values) {
+            addCriterion("file_id_to_user not in", values, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserBetween(Long value1, Long value2) {
+            addCriterion("file_id_to_user between", value1, value2, "fileIdToUser");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileIdToUserNotBetween(Long value1, Long value2) {
+            addCriterion("file_id_to_user not between", value1, value2, "fileIdToUser");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;
