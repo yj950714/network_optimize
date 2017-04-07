@@ -19,6 +19,8 @@ public enum ErrorCode {
 	//文件相关错误
 	FILE_TYPE_ERROR(40001,"文件类型错误"),
 	FILE_NOT_EXIST(40002,"文件不存在"),
+	FILE_DELETE_FAILED(40003,"文件删除失败"),
+	FILE_EXTENSION_CANNOT_CHANGE(40004,"文件扩展名不能更改"),
 	UPLOAD_TO_REMOTE_ERROR(40005,"上传文件到计算服务器错误"),
 	DOWNLOAD_FROM_REMOTE_ERROR(40006,"从计算服务器下载文件出错"),
 	

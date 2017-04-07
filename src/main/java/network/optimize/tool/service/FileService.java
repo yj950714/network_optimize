@@ -125,7 +125,9 @@ public class FileService {
 				throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
 			}
 			//删除要删除的文件
-			FileUtil.deleteFile(fileToDelete.getPosition() + fileToDelete.getFileName());
+			if (!FileUtil.deleteFile(fileToDelete.getPosition() + fileToDelete.getFileName())){
+				throw new WebBackendException(ErrorCode.FILE_DELETE_FAILED);
+			}
 			fileMapper.deleteByPrimaryKey(fileToDelete.getId());
 			//修正每一个显示给用户的ID大于删除文件ID的记录，保证用户看到的ID连续
 			for (File eachFile : fileList){
@@ -144,7 +146,11 @@ public class FileService {
 				throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
 			}
 			if (request.getFile_Name()!=null && !request.getFile_Name().isEmpty()){
+				if (!FileUtil.getFileSuffix(request.getFile_Name()).equals(fileTypeMapper.selectByPrimaryKey(file.getFileTypeId()).getExtension())){
+					throw new WebBackendException(ErrorCode.FILE_EXTENSION_CANNOT_CHANGE);
+				}
 				file.setFileNameToUser(request.getFile_Name());
+				file.setUpdateTime(new Date());
 				fileMapper.updateByPrimaryKey(file);
 			}
 		}
