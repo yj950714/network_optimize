@@ -1,6 +1,9 @@
 package network.optimize.tool.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +32,20 @@ public class FileController {
     @RequestMapping(value="/file/upload", method=RequestMethod.POST)
     BaseResponse uploadFile(@RequestAttribute("user") User user, @RequestParam("file") MultipartFile uploadfile) throws Exception {
     	BaseResponse response = fileService.uploadFile(user, uploadfile);
+    	return response;
+    }
+    
+    /**
+     * 根据url直接让用户下载文件
+     * @param user
+     * @param id
+     * @param httpResponse
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/file/download/{id}", method=RequestMethod.GET)
+    BaseResponse downloadFile(@RequestAttribute("user") User user, @PathVariable Long id, HttpServletResponse httpResponse) throws Exception {
+    	BaseResponse response = fileService.downloadFile(user, id, httpResponse);
     	return response;
     }
     

@@ -1,7 +1,14 @@
 package network.optimize.tool.service;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -111,6 +118,13 @@ public class FileService {
 		return response;
 	}
 	
+	/**
+	 * 根据Request修改文件信息或删除文件
+	 * @param user
+	 * @param request
+	 * @return
+	 * @throws WebBackendException
+	 */
 	public BaseResponse changeUserFile(User user, ChangeUserFileRequest request) throws WebBackendException{
 		if (request.getAction().equals(NetworkOptimizeConstant.FILE_DELETE)){
 			//找到该用户的所有文件列表
@@ -157,4 +171,50 @@ public class FileService {
 		return new BaseResponse();
 	}
 	
+	/**
+	 * 文件下载Url
+	 * @param idToUser
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public BaseResponse downloadFile(User user, Long idToUser, HttpServletResponse response) throws Exception{
+		//检测文件是否存在并获取相关信息
+		FileExample fileExample = new FileExample();
+		fileExample.or().andFileIdToUserEqualTo(idToUser).andUserIdEqualTo(user.getId());
+		File file = CommonUtil.getFirst(fileMapper.selectByExample(fileExample));
+		if (file==null){
+			throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
+		}
+		java.io.File outfiles = new java.io.File(file.getPosition()+file.getFileName());
+		//将文件写入输出流
+		response.setHeader("content-type", "application/octet-stream");
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-Disposition", "attachment;filename=" + file.getFileNameToUser());
+		byte[] buff = new byte[1024];
+		BufferedInputStream bis = null;
+		OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			bis = new BufferedInputStream(new FileInputStream(outfiles));
+			int i = bis.read(buff);
+			while (i != -1) {
+				os.write(buff, 0, buff.length);
+				os.flush();
+				i = bis.read(buff);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return new BaseResponse();
+	}
 }
