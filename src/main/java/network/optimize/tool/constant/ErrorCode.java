@@ -23,6 +23,9 @@ public enum ErrorCode {
 	FILE_EXTENSION_CANNOT_CHANGE(40004,"文件扩展名不能更改"),
 	UPLOAD_TO_REMOTE_ERROR(40005,"上传文件到计算服务器错误"),
 	DOWNLOAD_FROM_REMOTE_ERROR(40006,"从计算服务器下载文件出错"),
+	//任务相关错误
+	TASK_NOT_EXIST(40002,"任务不存在"),
+	TASK_NOT_BELONG_TO_USER(40003, "任务不属于该用户"),
 	
 	
 	OTHER(10099,"其他类型错误");

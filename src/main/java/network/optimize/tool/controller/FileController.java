@@ -60,6 +60,13 @@ public class FileController {
     	return response;
     } 
     
+    /**
+     * 更改文件信息，如删除，修改文件名等
+     * @param user
+     * @param request
+     * @return
+     * @throws WebBackendException
+     */
     @RequestMapping(value="/user/files", method=RequestMethod.POST)
     BaseResponse changeUserFile(@RequestAttribute("user") User user, ChangeUserFileRequest request) throws WebBackendException{
     	BaseResponse response = fileService.changeUserFile(user, request);
