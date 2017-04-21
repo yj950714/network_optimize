@@ -14,7 +14,7 @@ public class SftpClientUtilTest {
 
 	@Test
 	public void testStfpClientUpload() throws Exception{
-		SftpClientUtil.sftpUpload(RemoteServerConstant.REMOTE_SERVER_ROOT_DIRECTORY, "D:\\log_network.txt");
+		SftpClientUtil.sftpUpload(RemoteServerConstant.REMOTE_SERVER_ROOT_DIRECTORY+"/test", "D:\\test.jpg");
 	}
 	
 	@Test

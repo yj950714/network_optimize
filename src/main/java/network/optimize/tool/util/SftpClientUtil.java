@@ -4,7 +4,7 @@ import network.optimize.tool.client.SftpClient;
 import network.optimize.tool.constant.ErrorCode;
 import network.optimize.tool.exception.WebBackendException;
 
-public class SftpClientUtil {
+public class SftpClientUtil{
 
 	/**
 	 *  通过SFTP上传文件到服务器

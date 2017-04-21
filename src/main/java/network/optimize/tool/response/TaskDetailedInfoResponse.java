@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @author Jie.Yao
  *
  */
-public class TaskDetailedInfoResponse {
+public class TaskDetailedInfoResponse extends BaseResponse {
 
 	private Long taskId;
 	private Long taskTypeId;

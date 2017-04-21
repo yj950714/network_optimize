@@ -393,6 +393,136 @@ public class FileTypeExample {
             addCriterion("extension not between", value1, value2, "extension");
             return (Criteria) this;
         }
+
+        public Criteria andFileCommandHeadIsNull() {
+            addCriterion("file_command_head is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadIsNotNull() {
+            addCriterion("file_command_head is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadEqualTo(String value) {
+            addCriterion("file_command_head =", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadNotEqualTo(String value) {
+            addCriterion("file_command_head <>", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadGreaterThan(String value) {
+            addCriterion("file_command_head >", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadGreaterThanOrEqualTo(String value) {
+            addCriterion("file_command_head >=", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadLessThan(String value) {
+            addCriterion("file_command_head <", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadLessThanOrEqualTo(String value) {
+            addCriterion("file_command_head <=", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadLike(String value) {
+            addCriterion("file_command_head like", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadNotLike(String value) {
+            addCriterion("file_command_head not like", value, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadIn(List<String> values) {
+            addCriterion("file_command_head in", values, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadNotIn(List<String> values) {
+            addCriterion("file_command_head not in", values, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadBetween(String value1, String value2) {
+            addCriterion("file_command_head between", value1, value2, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andFileCommandHeadNotBetween(String value1, String value2) {
+            addCriterion("file_command_head not between", value1, value2, "fileCommandHead");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeIsNull() {
+            addCriterion("task_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeIsNotNull() {
+            addCriterion("task_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeEqualTo(Long value) {
+            addCriterion("task_type =", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotEqualTo(Long value) {
+            addCriterion("task_type <>", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeGreaterThan(Long value) {
+            addCriterion("task_type >", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeGreaterThanOrEqualTo(Long value) {
+            addCriterion("task_type >=", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeLessThan(Long value) {
+            addCriterion("task_type <", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeLessThanOrEqualTo(Long value) {
+            addCriterion("task_type <=", value, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeIn(List<Long> values) {
+            addCriterion("task_type in", values, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotIn(List<Long> values) {
+            addCriterion("task_type not in", values, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeBetween(Long value1, Long value2) {
+            addCriterion("task_type between", value1, value2, "taskType");
+            return (Criteria) this;
+        }
+
+        public Criteria andTaskTypeNotBetween(Long value1, Long value2) {
+            addCriterion("task_type not between", value1, value2, "taskType");
+            return (Criteria) this;
+        }
     }
 
     /**

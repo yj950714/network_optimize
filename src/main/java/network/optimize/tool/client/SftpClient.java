@@ -103,9 +103,16 @@ public class SftpClient {
     * @throws Exception      
     */ 
     public void upload(String directory, String uploadFile) throws Exception { 
-    	this.sftp.cd(directory); 
-    	File file = new File(uploadFile); 
-    	this.sftp.put(new FileInputStream(file), file.getName()); 
+    	try{
+    		this.sftp.mkdir(directory);
+    		this.sftp.cd(directory); 
+    		File file = new File(uploadFile); 
+    		this.sftp.put(new FileInputStream(file), file.getName()); 
+    	} catch (Exception e){
+    		this.sftp.cd(directory); 
+    		File file = new File(uploadFile); 
+    		this.sftp.put(new FileInputStream(file), file.getName()); 
+    	}
     }
     
     /** 

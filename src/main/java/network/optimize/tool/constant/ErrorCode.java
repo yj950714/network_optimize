@@ -23,9 +23,20 @@ public enum ErrorCode {
 	FILE_EXTENSION_CANNOT_CHANGE(40004,"文件扩展名不能更改"),
 	UPLOAD_TO_REMOTE_ERROR(40005,"上传文件到计算服务器错误"),
 	DOWNLOAD_FROM_REMOTE_ERROR(40006,"从计算服务器下载文件出错"),
+	FILE_NOT_BELONG_TO_USER(40007, "文件不属于该用户"),
+	DIR_NOT_EXIST(40008, "路径错误"),
 	//任务相关错误
-	TASK_NOT_EXIST(40002,"任务不存在"),
-	TASK_NOT_BELONG_TO_USER(40003, "任务不属于该用户"),
+	TASK_NOT_EXIST(50002,"任务不存在"),
+	TASK_NOT_BELONG_TO_USER(50003, "任务不属于该用户"),
+	TASK_STATUS_ERROR(50004, "任务状态错误"),
+	TASK_TYPE_NOT_EXIST(50005, "任务类型不存在"),
+	REMOTE_RUN_ERROR(50006, "远程计算失败"),
+	
+	//参数相关
+	PARAM_NAME_NOT_MATCH_VALUE(60002, "参数和值不匹配"),
+	PARAM_NOT_EXIST(60003, "参数不存在"),
+	PARAM_NAME_NOT_MATCH_TASK(60004, "参数和任务不匹配"),
+	FILE_TYPE_NOT_MATCH_TASK(60005, "文件类型和任务不匹配"),
 	
 	
 	OTHER(10099,"其他类型错误");
