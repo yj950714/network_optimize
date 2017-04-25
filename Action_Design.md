@@ -268,25 +268,24 @@ http请求方式：GET
 }
 ```
 
-####新建任务-设定参数
+####新建任务
 
-http请求方式：POST
+http请求方式：GET
 
-/tasks/add/param
+/tasks/add/{type}
 
 客户端发送
 ```java
 {
-	taskTypeId : Long,
-	paramName : List<String>,
-	paramValue : List<String>,
+	//路径参数
+	type : Long
 }
 ```
 
 服务器返回
 ```java
 {
-	errorCode : int, //错误码
+	errorCode : int //错误码
 }
 ```
 
@@ -299,9 +298,37 @@ http请求方式：POST
 客户端发送
 ```java
 {
-	taskTypeId : Long,
+	taskId : Long,
+	fileList : List<String>
+}
+```
+
+服务器返回
+```java
+{
+	errorCode : int, //错误码
+}
+```
+
+####新建任务-设定参数
+
+http请求方式：POST
+
+/tasks/add/param
+
+客户端发送
+```java
+{
+	taskId : Long,
 	paramName : List<String>,
 	paramValue : List<String>,
+}
+```
+
+服务器返回
+```java
+{
+	errorCode : int, //错误码
 }
 ```
 

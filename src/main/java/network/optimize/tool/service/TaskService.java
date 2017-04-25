@@ -272,6 +272,9 @@ public class TaskService {
 		if (user.getId() != task.getUserId()){
 			throw new WebBackendException(ErrorCode.TASK_NOT_BELONG_TO_USER);
 		}
+		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_START){
+			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
+		}
 		//获取命令头
 		String command = taskTypeMapper.selectByPrimaryKey(task.getTaskTypeId()).getCommandHead();
 		//获取任务的所有文件
@@ -284,7 +287,7 @@ public class TaskService {
 				File file = fileMapper.selectByPrimaryKey(taskFile.getFileId());
 				SftpClientUtil.sftpUpload(RemoteServerConstant.REMOTE_SERVER_ROOT_DIRECTORY + "/" + user.getId().toString(), file.getPosition()+file.getFileName());
 				FileType fileType = fileTypeMapper.selectByPrimaryKey(file.getFileTypeId());
-				command = command + " " + fileType.getFileCommandHead() + " " + file.getFileName();
+				command = command + " " + fileType.getFileCommandHead() + " " + RemoteServerConstant.REMOTE_SERVER_ROOT_DIRECTORY + "/" + user.getId().toString() + "/" +file.getFileName();
 			}
 		}
 		//获取任务的所有参数

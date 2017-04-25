@@ -25,6 +25,7 @@ public enum ErrorCode {
 	DOWNLOAD_FROM_REMOTE_ERROR(40006,"从计算服务器下载文件出错"),
 	FILE_NOT_BELONG_TO_USER(40007, "文件不属于该用户"),
 	DIR_NOT_EXIST(40008, "路径错误"),
+	REMOTE_SERVER_CONNECT_ERROR(40010, "远程服务器连接失败"),
 	//任务相关错误
 	TASK_NOT_EXIST(50002,"任务不存在"),
 	TASK_NOT_BELONG_TO_USER(50003, "任务不属于该用户"),

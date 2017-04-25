@@ -13,6 +13,6 @@ public class SshExecClientUtilTest {
 
 	@Test
 	public void testSshExec() throws Exception{
-		SshExecClientUtil.runCmd("mkdir hello");
+		SshExecClientUtil.runCmd("mkdir hello \n");
 	}
 }

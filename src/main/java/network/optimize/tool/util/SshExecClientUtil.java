@@ -20,8 +20,7 @@ public class SshExecClientUtil {
 	public static void runCmd(String cmd) throws WebBackendException{
 		try{
 			SshExecClient sshClient = new SshExecClient();
-			sshClient.runCmd(cmd);
-			sshClient.close();
+			sshClient.runCmdJsch(cmd);
 		} catch (Exception e){
 			throw new WebBackendException(ErrorCode.REMOTE_RUN_ERROR);
 		}
