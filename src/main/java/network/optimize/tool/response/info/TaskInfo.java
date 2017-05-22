@@ -15,6 +15,8 @@ public class TaskInfo {
 	private Long taskTypeId;
 	private String taskTypeName;
 	private Integer status;
+	private String statusCode;
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
 	private Date createTime;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
@@ -56,6 +58,11 @@ public class TaskInfo {
 		this.createTime = createTime;
 	}
 	
-	
+	public String getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 	
 }

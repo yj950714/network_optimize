@@ -7,6 +7,7 @@ import java.util.List;
 import network.optimize.tool.constant.ErrorCode;
 import network.optimize.tool.constant.NetworkOptimizeConstant;
 import network.optimize.tool.constant.RemoteServerConstant;
+import network.optimize.tool.constant.TaskConstant;
 import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.FileExample;
 import network.optimize.tool.entity.FileType;
@@ -82,6 +83,7 @@ public class TaskService {
 					taskInfo.setTaskTypeId(task.getTaskTypeId());
 					taskInfo.setTaskTypeName(taskTypeMapper.selectByPrimaryKey(task.getTaskTypeId()).getTaskTypeName());
 					taskInfo.setStatus(task.getStatus());
+					taskInfo.setStatusCode(TaskConstant.STATUS.get(task.getStatus()));
 					taskInfo.setCreateTime(task.getCreateTime());
 					taskInfo.setUpdateTime(task.getUpdateTime());
 					return taskInfo;
