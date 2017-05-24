@@ -93,6 +93,36 @@ public class TaskService {
 	}
 	
 	/**
+	 * 获取用户特定类型的任务
+	 * @param userId
+	 * @param typeId
+	 * @return
+	 * @throws Exception
+	 */
+	public ListResponse<TaskInfo> getTasksByUserAndType(Long userId, Long typeId) throws Exception{
+		TaskExample taskExample = new TaskExample();
+		taskExample.or().andUserIdEqualTo(userId).andTaskTypeIdEqualTo(typeId);
+		List<Task> taskList = taskMapper.selectByExample(taskExample);
+		if (taskList == null) return null;
+		ListResponse<TaskInfo> response = new ListResponse<TaskInfo>(taskList, new RowConverter<Task,TaskInfo>(){
+			@Override
+			@SuppressWarnings("null")
+			public TaskInfo convertRow (Task task){
+					TaskInfo taskInfo = new TaskInfo();
+					taskInfo.setId(task.getId());
+					taskInfo.setTaskTypeId(task.getTaskTypeId());
+					taskInfo.setTaskTypeName(taskTypeMapper.selectByPrimaryKey(task.getTaskTypeId()).getTaskTypeName());
+					taskInfo.setStatus(task.getStatus());
+					taskInfo.setStatusCode(TaskConstant.STATUS.get(task.getStatus()));
+					taskInfo.setCreateTime(task.getCreateTime());
+					taskInfo.setUpdateTime(task.getUpdateTime());
+					return taskInfo;
+			}
+		});
+		return response;
+	}
+	
+	/**
 	 * 获取单个任务的详细信息
 	 * @param taskId
 	 * @param userId

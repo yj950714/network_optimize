@@ -38,13 +38,26 @@ public class TaskController {
     }
     
     /**
+     * 获取一个用户的特定类型任务
+     * @param user
+     * @param type
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/tasks/{type}", method=RequestMethod.GET)
+    ListResponse<TaskInfo> getTasksByUserAndType(@RequestAttribute("user") User user, @PathVariable Long type) throws Exception {
+    	ListResponse<TaskInfo> response = taskService.getTasksByUserAndType(user.getId(), type);
+    	return response;
+    }
+    
+    /**
      * 获取单个任务的详细信息
      * @param id
      * @param user
      * @return
      * @throws WebBackendException
      */
-    @RequestMapping(value="/tasks/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/tasks/detail/{id}", method=RequestMethod.GET)
     TaskDetailedInfoResponse getTaskDetailedInfo(@PathVariable Long id, @RequestAttribute("user") User user) throws WebBackendException{
     	TaskDetailedInfoResponse response = taskService.getTaskDetailedInfo(id, user.getId());
     	return response;

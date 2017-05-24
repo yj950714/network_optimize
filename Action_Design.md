@@ -230,6 +230,39 @@ http请求方式：GET
         taskTypeId : String,
         taskTypeName : String,
         status : Integer,
+        statusCode : String,
+        createTime : Date,
+        updateTime : Date
+      }
+      ....
+	]
+}
+```
+
+####获取一个用户的特定类型任务
+
+http请求方式：GET
+
+/tasks/{type}
+
+客户端发送
+```java
+{
+	type : Long
+}
+```
+
+服务器返回
+```java
+{
+	errorCode : int, //错误码
+	data :[
+      {
+        id : Long,
+        taskTypeId : String,
+        taskTypeName : String,
+        status : Integer,
+        statusCode : String,
         createTime : Date,
         updateTime : Date
       }
@@ -242,7 +275,7 @@ http请求方式：GET
 
 http请求方式：GET
 
-/tasks/{id}
+/tasks/detail/{id}
 
 客户端发送
 ```java
