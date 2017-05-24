@@ -115,5 +115,16 @@ public class TaskController {
     	return response;
     }
     
-    
+    /**
+     * 删除任务
+     * @param taskId
+     * @param user
+     * @return
+     * @throws WebBackendException
+     */
+    @RequestMapping(value="/tasks/delete/{taskId}", method=RequestMethod.DELETE)
+    BaseResponse deleteTask(@PathVariable Long taskId, @RequestAttribute("user") User user) throws WebBackendException{
+    	BaseResponse response = taskService.deleteTask(taskId, user);
+    	return response;
+    }
 }

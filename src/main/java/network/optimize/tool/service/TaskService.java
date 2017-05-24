@@ -304,7 +304,7 @@ public class TaskService {
 		if (user.getId() != task.getUserId()){
 			throw new WebBackendException(ErrorCode.TASK_NOT_BELONG_TO_USER);
 		}
-		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_START){
+		if (task.getStatus() != TaskConstant.STATUS_WAIT_TO_START){
 			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
 		}
 		//获取命令头
@@ -340,4 +340,36 @@ public class TaskService {
 		return new BaseResponse();
 	}
 	
+	
+	/**
+	 * 删除任务
+	 * @param taskId
+	 * @param user
+	 * @return
+	 * @throws WebBackendException
+	 */
+	public BaseResponse deleteTask(Long taskId, User user) throws WebBackendException{
+		Task task = taskMapper.selectByPrimaryKey(taskId);
+		if (task == null){
+			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
+		}
+		if (user.getId() != task.getUserId()){
+			throw new WebBackendException(ErrorCode.TASK_NOT_BELONG_TO_USER);
+		}
+		if (task.getStatus() == TaskConstant.STATUS_RUNNING){
+			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
+		}
+		//删除相关的任务参数记录
+		TaskParamExample taskParamExample = new TaskParamExample();
+		taskParamExample.or().andTaskIdEqualTo(taskId);
+		taskParamMapper.deleteByExample(taskParamExample);
+		//删除任务相关文件记录
+		TaskFileExample taskFileExample = new TaskFileExample();
+		taskFileExample.or().andTaskIdEqualTo(taskId);
+		taskFileMapper.deleteByExample(taskFileExample);
+		
+		taskMapper.deleteByPrimaryKey(taskId);
+		
+		return new BaseResponse();
+	}
 }
