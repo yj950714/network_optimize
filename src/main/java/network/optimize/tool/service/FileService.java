@@ -119,6 +119,34 @@ public class FileService {
 	}
 	
 	/**
+	 * 获取一个用户的特定类型文件列表
+	 * @throws Exception 
+	 */
+	public ListResponse<FileInfo> getFilesByTypeAndUser(Long id, Long type) throws Exception{
+		FileExample fileExample = new FileExample();
+		fileExample.or().andUserIdEqualTo(id).andFileTypeIdEqualTo(type);
+		List<File> fileList = fileMapper.selectByExample(fileExample);
+		ListResponse<FileInfo> response = new ListResponse<FileInfo>(fileList, new RowConverter<File,FileInfo>(){
+			@Override
+			@SuppressWarnings("null")
+			public FileInfo convertRow (File file){
+					FileInfo fileInfo = new FileInfo();
+					fileInfo.setId(file.getId());
+					fileInfo.setUserId(file.getUserId());
+					fileInfo.setFileIdToUser(file.getFileIdToUser());
+					fileInfo.setFileTypeId(file.getFileTypeId());
+					fileInfo.setFileTypeName(fileTypeMapper.selectByPrimaryKey(file.getFileTypeId()).getFileTypeName());
+					fileInfo.setFileName(file.getFileName());
+					fileInfo.setFileNameToUser(file.getFileNameToUser());
+					fileInfo.setFileSize(file.getFileSize());
+					fileInfo.setUpdateTime(file.getUpdateTime());
+					return fileInfo;
+			}
+		});
+		return response;
+	}
+	
+	/**
 	 * 根据Request修改文件信息或删除文件
 	 * @param user
 	 * @param request

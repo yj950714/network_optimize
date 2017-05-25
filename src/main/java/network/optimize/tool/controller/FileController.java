@@ -73,4 +73,13 @@ public class FileController {
     	return response;
     }
     
+    /**
+	 * 获取一个用户的所有特定类型文件,由于有token，不用涉及id
+	 * @throws Exception 
+	 */
+    @RequestMapping(value="/user/files/{type}", method=RequestMethod.GET)
+    ListResponse<FileInfo> getFilesByTypeAndUser(@RequestAttribute("user") User user, @PathVariable Long type) throws Exception {
+    	ListResponse<FileInfo> response = fileService.getFilesByTypeAndUser(user.getId(), type);
+    	return response;
+    }
 }
