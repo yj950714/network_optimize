@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.exception.WebBackendException;
 import network.optimize.tool.request.AddTaskRequest;
-import network.optimize.tool.request.AddTaskSetFileRequest;
-import network.optimize.tool.request.AddTaskSetParamRequest;
+import network.optimize.tool.request.ChangeTaskRequest;
 import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.ListResponse;
 import network.optimize.tool.response.TaskDetailedInfoResponse;
@@ -66,13 +65,26 @@ public class TaskController {
     /**
      * 新建一个任务
      * @param user
+     * @param AddTaskRequest
+     * @return
+     * @throws WebBackendException
+     */
+    @RequestMapping(value="/tasks/add", method=RequestMethod.POST)
+    BaseResponse addTask(@RequestAttribute("user") User user, @RequestBody @Valid AddTaskRequest request) throws WebBackendException{
+    	BaseResponse response = taskService.addTask(user, request);
+    	return response;
+    }
+    
+    /**
+     * 修改一个任务
+     * @param user
      * @param taskTypeId
      * @return
      * @throws WebBackendException
      */
-    @RequestMapping(value="/tasks/add", method=RequestMethod.GET)
-    BaseResponse addTask(@RequestAttribute("user") User user, @RequestBody @Valid AddTaskRequest request) throws WebBackendException{
-    	BaseResponse response = taskService.addTask(user, request);
+    @RequestMapping(value="/tasks/change", method=RequestMethod.POST)
+    BaseResponse addTask(@RequestAttribute("user") User user, @RequestBody @Valid ChangeTaskRequest request) throws WebBackendException{
+    	BaseResponse response = taskService.changeTask(user, request);
     	return response;
     }
     

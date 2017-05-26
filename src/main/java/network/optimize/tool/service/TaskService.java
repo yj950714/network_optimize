@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import network.optimize.tool.constant.ErrorCode;
-import network.optimize.tool.constant.NetworkOptimizeConstant;
 import network.optimize.tool.constant.RemoteServerConstant;
 import network.optimize.tool.constant.TaskConstant;
 import network.optimize.tool.entity.File;
 import network.optimize.tool.entity.FileExample;
 import network.optimize.tool.entity.FileType;
 import network.optimize.tool.entity.Parameter;
-import network.optimize.tool.entity.ParameterExample;
 import network.optimize.tool.entity.Task;
 import network.optimize.tool.entity.TaskExample;
 import network.optimize.tool.entity.TaskFile;
@@ -32,14 +30,11 @@ import network.optimize.tool.mapper.TaskMapper;
 import network.optimize.tool.mapper.TaskParamMapper;
 import network.optimize.tool.mapper.TaskTypeMapper;
 import network.optimize.tool.request.AddTaskRequest;
-import network.optimize.tool.request.AddTaskSetFileRequest;
-import network.optimize.tool.request.AddTaskSetParamRequest;
-import network.optimize.tool.response.AddTaskResponse;
+import network.optimize.tool.request.ChangeTaskRequest;
 import network.optimize.tool.response.BaseResponse;
 import network.optimize.tool.response.ListResponse;
 import network.optimize.tool.response.TaskDetailedInfoResponse;
 import network.optimize.tool.response.info.TaskInfo;
-import network.optimize.tool.util.CommonUtil;
 import network.optimize.tool.util.RowConverter;
 import network.optimize.tool.util.SftpClientUtil;
 import network.optimize.tool.util.SshExecClientUtil;
@@ -234,6 +229,83 @@ public class TaskService {
 		}
 		return new BaseResponse();
 	}
+	
+	/**
+	 * 修改一个任务
+	 * @param user
+	 * @param request
+	 * @return
+	 * @throws WebBackendException
+	 */
+	public BaseResponse changeTask(User user, ChangeTaskRequest request) throws WebBackendException{
+		if (request.getParamIdList() != null && request.getParamValueList() != null){
+			if (request.getParamIdList().size() != request.getParamValueList().size())
+				throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_VALUE);
+		}	
+		//获得任务
+		Task task = taskMapper.selectByPrimaryKey(request.getTaskId());
+		if (taskMapper.selectByPrimaryKey(request.getTaskId()) == null){
+			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
+		}
+		if (task.getStatus() != TaskConstant.STATUS_WAIT_TO_START){
+			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
+		}
+		//检查文件
+		for (Long fileId : request.getFileIdList()){
+			File file = fileMapper.selectByPrimaryKey(fileId);
+			if (file == null){
+				throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
+			}
+			//文件所属
+			if (file.getUserId()!=0 && file.getUserId() != user.getId()){
+				throw new WebBackendException(ErrorCode.FILE_NOT_BELONG_TO_USER);
+			}
+			//检查文件类型对应的任务类型
+			FileType fileType = fileTypeMapper.selectByPrimaryKey(file.getFileTypeId());
+			if (fileType.getTaskType() != task.getTaskTypeId()){
+				throw new WebBackendException(ErrorCode.FILE_TYPE_NOT_MATCH_TASK);
+			}
+		}
+		//检查参数
+		for (int i=0; i<request.getParamIdList().size(); i++){
+			//检查参数存在
+			Parameter parameter = parameterMapper.selectByPrimaryKey(request.getParamIdList().get(i));
+			if (parameter == null){
+				throw new WebBackendException(ErrorCode.PARAM_NOT_EXIST);
+			}
+			//检查参数和任务是否匹配
+			if (parameter.getTaskTypeId() != task.getTaskTypeId()){
+				throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_TASK);
+			}
+		}
+		//写入数据库
+		task.setUpdateTime(new Date());
+		taskMapper.updateByPrimaryKey(task);
+		TaskFileExample taskFileExample = new TaskFileExample();
+		taskFileExample.or().andTaskIdEqualTo(task.getId());
+		taskFileMapper.deleteByExample(taskFileExample);
+		for (Long fileId : request.getFileIdList()){
+			File file = fileMapper.selectByPrimaryKey(fileId);
+			TaskFile taskFile = new TaskFile();
+			taskFile.setFileId(file.getId());
+			taskFile.setTaskId(task.getId());
+			taskFileMapper.insert(taskFile);
+		}
+		TaskParamExample taskParamExample = new TaskParamExample();
+		taskParamExample.or().andTaskIdEqualTo(task.getId());
+		taskParamMapper.deleteByExample(taskParamExample);
+		for (int i=0; i<request.getParamIdList().size(); i++){
+			Parameter parameter = parameterMapper.selectByPrimaryKey(request.getParamIdList().get(i));
+			TaskParam taskParam = new TaskParam();
+			taskParam.setParamId(parameter.getId());
+			taskParam.setParamValue(request.getParamValueList().get(i));
+			taskParam.setTaskId(task.getId());
+			taskParamMapper.insert(taskParam);
+		}
+		return new BaseResponse();
+	}
+
+	
 //	
 //	/**
 //	 * 新建任务--设定文件
