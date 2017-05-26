@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import network.optimize.tool.constant.ErrorCode;
 import network.optimize.tool.constant.NetworkOptimizeConstant;
 import network.optimize.tool.constant.RemoteServerConstant;
@@ -19,7 +22,6 @@ import network.optimize.tool.entity.TaskFile;
 import network.optimize.tool.entity.TaskFileExample;
 import network.optimize.tool.entity.TaskParam;
 import network.optimize.tool.entity.TaskParamExample;
-import network.optimize.tool.entity.TaskType;
 import network.optimize.tool.entity.User;
 import network.optimize.tool.exception.WebBackendException;
 import network.optimize.tool.mapper.FileMapper;
@@ -29,6 +31,7 @@ import network.optimize.tool.mapper.TaskFileMapper;
 import network.optimize.tool.mapper.TaskMapper;
 import network.optimize.tool.mapper.TaskParamMapper;
 import network.optimize.tool.mapper.TaskTypeMapper;
+import network.optimize.tool.request.AddTaskRequest;
 import network.optimize.tool.request.AddTaskSetFileRequest;
 import network.optimize.tool.request.AddTaskSetParamRequest;
 import network.optimize.tool.response.AddTaskResponse;
@@ -40,9 +43,6 @@ import network.optimize.tool.util.CommonUtil;
 import network.optimize.tool.util.RowConverter;
 import network.optimize.tool.util.SftpClientUtil;
 import network.optimize.tool.util.SshExecClientUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TaskService {
@@ -171,47 +171,30 @@ public class TaskService {
 	 * @return
 	 * @throws WebBackendException
 	 */
-	public AddTaskResponse addTask(User user, Long taskTypeId) throws WebBackendException{
-		if (taskTypeMapper.selectByPrimaryKey(taskTypeId) == null){
+	public BaseResponse addTask(User user, AddTaskRequest request) throws WebBackendException{
+		if (taskTypeMapper.selectByPrimaryKey(request.getTaskType()) == null){
 			throw new WebBackendException(ErrorCode.TASK_TYPE_NOT_EXIST);
 		}
+		if (request.getParamIdList() != null && request.getParamValueList() != null){
+			if (request.getParamIdList().size() != request.getParamValueList().size())
+				throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_VALUE);
+		}	
 		//插入任务
 		Task task = new Task();
-		task.setTaskTypeId(taskTypeId);
+		task.setTaskTypeId(request.getTaskType());
 		task.setUserId(user.getId());
 		task.setCreateTime(new Date());
 		task.setUpdateTime(new Date());
-		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_FILE);
-		taskMapper.insert(task);
-		return new AddTaskResponse(task.getId());
-	}
-	
-	/**
-	 * 新建任务--设定文件
-	 * @param user
-	 * @param request
-	 * @return
-	 * @throws WebBackendException
-	 */
-	public BaseResponse addTaskSetFile(User user, AddTaskSetFileRequest request) throws WebBackendException{
-		if (request.getFileList() == null || request.getFileList().size()==0) 
-			return new BaseResponse();
-		if (taskMapper.selectByPrimaryKey(request.getTaskId()) == null){
-			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
-		}
-		Task task = taskMapper.selectByPrimaryKey(request.getTaskId());
-		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_FILE){
-			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
-		}
-		for (String fileName : request.getFileList()){
-			FileExample fileExample = new FileExample();
-			fileExample.or().andFileNameEqualTo(fileName);
-			File file = CommonUtil.getFirst(fileMapper.selectByExample(fileExample));
+		task.setStatus(TaskConstant.STATUS_WAIT_TO_START);
+		
+		//检查文件
+		for (Long fileId : request.getFileIdList()){
+			File file = fileMapper.selectByPrimaryKey(fileId);
 			if (file == null){
 				throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
 			}
 			//文件所属
-			if (file.getUserId() != user.getId()){
+			if (file.getUserId()!=0 && file.getUserId() != user.getId()){
 				throw new WebBackendException(ErrorCode.FILE_NOT_BELONG_TO_USER);
 			}
 			//检查文件类型对应的任务类型
@@ -220,49 +203,10 @@ public class TaskService {
 				throw new WebBackendException(ErrorCode.FILE_TYPE_NOT_MATCH_TASK);
 			}
 		}
-		//设定文件
-		for (String fileName : request.getFileList()){
-			FileExample fileExample = new FileExample();
-			fileExample.or().andFileNameEqualTo(fileName);
-			File file = CommonUtil.getFirst(fileMapper.selectByExample(fileExample));
-			TaskFile taskFile = new TaskFile();
-			taskFile.setFileId(file.getId());
-			taskFile.setTaskId(task.getId());
-			taskFileMapper.insert(taskFile);
-		}
-		//更新Task状态
-		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_PARAM);
-		taskMapper.updateByPrimaryKey(task);
-		return new BaseResponse();
-	}
-	
-	/**
-	 * 新建任务--设定参数
-	 * @param user
-	 * @param request
-	 * @return
-	 * @throws WebBackendException
-	 */
-	public BaseResponse addTaskSetParam(User user, AddTaskSetParamRequest request) throws WebBackendException{
-		if (request.getParamName() == null || request.getParamValue() == null) 
-			return new BaseResponse();
-		if (request.getParamName().size()==0 || request.getParamValue().size()==0) 
-			return new BaseResponse();
-		if (taskMapper.selectByPrimaryKey(request.getTaskId()) == null){
-			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
-		}
-		if (request.getParamName().size() != request.getParamValue().size()){
-			throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_VALUE);
-		}
-		Task task = taskMapper.selectByPrimaryKey(request.getTaskId());
-		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_PARAM){
-			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
-		}
-		for (int i=0; i<request.getParamName().size(); i++){
+		//检查参数
+		for (int i=0; i<request.getParamIdList().size(); i++){
 			//检查参数存在
-			ParameterExample parameterExample = new ParameterExample();
-			parameterExample.or().andParamNameEqualTo(request.getParamName().get(i));
-			Parameter parameter = CommonUtil.getFirst(parameterMapper.selectByExample(parameterExample));
+			Parameter parameter = parameterMapper.selectByPrimaryKey(request.getParamIdList().get(i));
 			if (parameter == null){
 				throw new WebBackendException(ErrorCode.PARAM_NOT_EXIST);
 			}
@@ -271,22 +215,127 @@ public class TaskService {
 				throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_TASK);
 			}
 		}
-		//设定参数
-		for (int i=0; i<request.getParamName().size(); i++){
+		//写入数据库
+		taskMapper.insert(task);
+		for (Long fileId : request.getFileIdList()){
+			File file = fileMapper.selectByPrimaryKey(fileId);
+			TaskFile taskFile = new TaskFile();
+			taskFile.setFileId(file.getId());
+			taskFile.setTaskId(task.getId());
+			taskFileMapper.insert(taskFile);
+		}
+		for (int i=0; i<request.getParamIdList().size(); i++){
+			Parameter parameter = parameterMapper.selectByPrimaryKey(request.getParamIdList().get(i));
 			TaskParam taskParam = new TaskParam();
-			ParameterExample parameterExample = new ParameterExample();
-			parameterExample.or().andParamNameEqualTo(request.getParamName().get(i));
-			Parameter parameter = CommonUtil.getFirst(parameterMapper.selectByExample(parameterExample));
 			taskParam.setParamId(parameter.getId());
-			taskParam.setParamValue(request.getParamValue().get(i));
+			taskParam.setParamValue(request.getParamValueList().get(i));
 			taskParam.setTaskId(task.getId());
 			taskParamMapper.insert(taskParam);
 		}
-		//更新Task状态
-		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_START);
-		taskMapper.updateByPrimaryKey(task);
 		return new BaseResponse();
 	}
+//	
+//	/**
+//	 * 新建任务--设定文件
+//	 * @param user
+//	 * @param request
+//	 * @return
+//	 * @throws WebBackendException
+//	 */
+//	public BaseResponse addTaskSetFile(User user, AddTaskSetFileRequest request) throws WebBackendException{
+//		if (request.getFileList() == null || request.getFileList().size()==0) 
+//			return new BaseResponse();
+//		if (taskMapper.selectByPrimaryKey(request.getTaskId()) == null){
+//			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
+//		}
+//		Task task = taskMapper.selectByPrimaryKey(request.getTaskId());
+//		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_FILE){
+//			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
+//		}
+//		for (String fileName : request.getFileList()){
+//			FileExample fileExample = new FileExample();
+//			fileExample.or().andFileNameEqualTo(fileName);
+//			File file = CommonUtil.getFirst(fileMapper.selectByExample(fileExample));
+//			if (file == null){
+//				throw new WebBackendException(ErrorCode.FILE_NOT_EXIST);
+//			}
+//			//文件所属
+//			if (file.getUserId() != user.getId()){
+//				throw new WebBackendException(ErrorCode.FILE_NOT_BELONG_TO_USER);
+//			}
+//			//检查文件类型对应的任务类型
+//			FileType fileType = fileTypeMapper.selectByPrimaryKey(file.getFileTypeId());
+//			if (fileType.getTaskType() != task.getTaskTypeId()){
+//				throw new WebBackendException(ErrorCode.FILE_TYPE_NOT_MATCH_TASK);
+//			}
+//		}
+//		//设定文件
+//		for (String fileName : request.getFileList()){
+//			FileExample fileExample = new FileExample();
+//			fileExample.or().andFileNameEqualTo(fileName);
+//			File file = CommonUtil.getFirst(fileMapper.selectByExample(fileExample));
+//			TaskFile taskFile = new TaskFile();
+//			taskFile.setFileId(file.getId());
+//			taskFile.setTaskId(task.getId());
+//			taskFileMapper.insert(taskFile);
+//		}
+//		//更新Task状态
+//		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_PARAM);
+//		taskMapper.updateByPrimaryKey(task);
+//		return new BaseResponse();
+//	}
+//	
+//	/**
+//	 * 新建任务--设定参数
+//	 * @param user
+//	 * @param request
+//	 * @return
+//	 * @throws WebBackendException
+//	 */
+//	public BaseResponse addTaskSetParam(User user, AddTaskSetParamRequest request) throws WebBackendException{
+//		if (request.getParamName() == null || request.getParamValue() == null) 
+//			return new BaseResponse();
+//		if (request.getParamName().size()==0 || request.getParamValue().size()==0) 
+//			return new BaseResponse();
+//		if (taskMapper.selectByPrimaryKey(request.getTaskId()) == null){
+//			throw new WebBackendException(ErrorCode.TASK_NOT_EXIST);
+//		}
+//		if (request.getParamName().size() != request.getParamValue().size()){
+//			throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_VALUE);
+//		}
+//		Task task = taskMapper.selectByPrimaryKey(request.getTaskId());
+//		if (task.getStatus() != NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_SET_PARAM){
+//			throw new WebBackendException(ErrorCode.TASK_STATUS_ERROR);
+//		}
+//		for (int i=0; i<request.getParamName().size(); i++){
+//			//检查参数存在
+//			ParameterExample parameterExample = new ParameterExample();
+//			parameterExample.or().andParamNameEqualTo(request.getParamName().get(i));
+//			Parameter parameter = CommonUtil.getFirst(parameterMapper.selectByExample(parameterExample));
+//			if (parameter == null){
+//				throw new WebBackendException(ErrorCode.PARAM_NOT_EXIST);
+//			}
+//			//检查参数和任务是否匹配
+//			if (parameter.getTaskTypeId() != task.getTaskTypeId()){
+//				throw new WebBackendException(ErrorCode.PARAM_NAME_NOT_MATCH_TASK);
+//			}
+//		}
+//		//设定参数
+//		for (int i=0; i<request.getParamName().size(); i++){
+//			TaskParam taskParam = new TaskParam();
+//			ParameterExample parameterExample = new ParameterExample();
+//			parameterExample.or().andParamNameEqualTo(request.getParamName().get(i));
+//			Parameter parameter = CommonUtil.getFirst(parameterMapper.selectByExample(parameterExample));
+//			taskParam.setParamId(parameter.getId());
+//			taskParam.setParamValue(request.getParamValue().get(i));
+//			taskParam.setTaskId(task.getId());
+//			taskParamMapper.insert(taskParam);
+//		}
+//		//更新Task状态
+//		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_WAIT_TO_START);
+//		taskMapper.updateByPrimaryKey(task);
+//		return new BaseResponse();
+//	}
 	
 	
 	/**
@@ -334,7 +383,7 @@ public class TaskService {
 		}
 		SshExecClientUtil.runCmd(command);
 		//更新Task状态
-		task.setStatus(NetworkOptimizeConstant.TASK_STATUS_RUNNING);
+		task.setStatus(TaskConstant.STATUS_RUNNING);
 		taskMapper.updateByPrimaryKey(task);
 
 		return new BaseResponse();
